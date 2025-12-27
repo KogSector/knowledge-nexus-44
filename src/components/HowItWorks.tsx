@@ -73,8 +73,8 @@ const HowItWorks = () => {
           ))}
         </div>
 
-        {/* Interactive demo mockup */}
-        <div className="max-w-4xl mx-auto">
+        {/* Interactive code demo */}
+        <div className="max-w-5xl mx-auto">
           <div className="rounded-3xl bg-foreground/[0.03] border border-border overflow-hidden shadow-medium">
             {/* Window header */}
             <div className="flex items-center gap-3 px-5 py-4 bg-secondary/50 border-b border-border">
@@ -84,45 +84,80 @@ const HowItWorks = () => {
                 <div className="w-3 h-3 rounded-full bg-emerald-400/60" />
               </div>
               <div className="flex-1 flex items-center justify-center">
-                <span className="text-xs text-muted-foreground font-mono px-3 py-1 rounded-full bg-muted/50">cursor — knowledge-layer</span>
+                <span className="text-xs text-muted-foreground font-mono px-3 py-1 rounded-full bg-muted/50">VS Code — knowledge-layer</span>
               </div>
             </div>
 
             {/* Code content */}
-            <div className="p-8 font-mono text-sm bg-card">
-              <div className="flex items-start gap-4 text-foreground">
-                <span className="text-primary font-bold">❯</span>
+            <div className="p-6 md:p-8 font-mono text-sm bg-[#1a1a2e] overflow-x-auto">
+              {/* Query */}
+              <div className="flex items-start gap-4 text-slate-100">
+                <span className="text-emerald-400 font-bold select-none">❯</span>
                 <div>
-                  <span className="text-primary font-semibold">@knowledge</span>
-                  <span className="text-muted-foreground ml-2">Why does the payment service fail for EU customers?</span>
+                  <span className="text-violet-400 font-semibold">@knowledge</span>
+                  <span className="text-slate-300 ml-2">How should I implement a rate limiter for our API?</span>
                 </div>
               </div>
               
-              <div className="mt-8 pl-6 border-l-2 border-primary/30">
-                <p className="text-muted-foreground text-xs uppercase tracking-wider mb-4">Found 3 relevant sources:</p>
-                <div className="space-y-3">
-                  <div className="flex items-start gap-3 p-3 rounded-xl bg-muted/30 hover:bg-muted/50 transition-colors">
-                    <span>💬</span>
-                    <span className="text-foreground">Slack #eng-payments: "EU VAT calculation issue" — @alex, 2 days ago</span>
+              {/* Response */}
+              <div className="mt-8 pl-6 border-l-2 border-violet-500/30">
+                <p className="text-slate-500 text-xs uppercase tracking-wider mb-4">Based on your codebase patterns & best practices:</p>
+                
+                {/* Code example */}
+                <div className="rounded-xl bg-[#0d0d1a] border border-slate-700/50 overflow-hidden">
+                  <div className="flex items-center justify-between px-4 py-2 bg-slate-800/50 border-b border-slate-700/50">
+                    <span className="text-xs text-slate-400">src/middleware/rateLimiter.ts</span>
+                    <span className="text-xs text-emerald-400">Recommended pattern</span>
                   </div>
-                  <div className="flex items-start gap-3 p-3 rounded-xl bg-muted/30 hover:bg-muted/50 transition-colors">
-                    <span>🎫</span>
-                    <span className="text-foreground">Jira PAYMENT-342: "Fix currency conversion for EUR" — In Progress</span>
+                  <pre className="p-4 text-xs md:text-sm overflow-x-auto">
+                    <code>
+                      <span className="text-violet-400">import</span><span className="text-slate-300"> {"{ Redis }"} </span><span className="text-violet-400">from</span><span className="text-amber-300"> '@upstash/redis'</span><span className="text-slate-300">;</span>{"\n"}
+                      <span className="text-violet-400">import</span><span className="text-slate-300"> {"{ Ratelimit }"} </span><span className="text-violet-400">from</span><span className="text-amber-300"> '@upstash/ratelimit'</span><span className="text-slate-300">;</span>{"\n\n"}
+                      <span className="text-slate-500">{"// Following your team's singleton pattern from auth.ts"}</span>{"\n"}
+                      <span className="text-violet-400">const</span><span className="text-slate-300"> ratelimit = </span><span className="text-violet-400">new</span><span className="text-cyan-400"> Ratelimit</span><span className="text-slate-300">({"{"}</span>{"\n"}
+                      <span className="text-slate-300">  redis: </span><span className="text-cyan-400">Redis</span><span className="text-slate-300">.fromEnv(),</span>{"\n"}
+                      <span className="text-slate-300">  limiter: </span><span className="text-cyan-400">Ratelimit</span><span className="text-slate-300">.slidingWindow(</span><span className="text-amber-300">10</span><span className="text-slate-300">, </span><span className="text-amber-300">"10 s"</span><span className="text-slate-300">),</span>{"\n"}
+                      <span className="text-slate-300">  analytics: </span><span className="text-amber-300">true</span><span className="text-slate-300">,</span>{"\n"}
+                      <span className="text-slate-300">{"})"}</span><span className="text-slate-300">;</span>{"\n\n"}
+                      <span className="text-violet-400">export async function</span><span className="text-cyan-400"> checkRateLimit</span><span className="text-slate-300">(userId: </span><span className="text-cyan-400">string</span><span className="text-slate-300">) {"{"}</span>{"\n"}
+                      <span className="text-slate-300">  </span><span className="text-violet-400">const</span><span className="text-slate-300"> {"{ success, limit, remaining }"} = </span><span className="text-violet-400">await</span><span className="text-slate-300"> ratelimit.limit(userId);</span>{"\n"}
+                      <span className="text-slate-300">  </span><span className="text-violet-400">return</span><span className="text-slate-300"> {"{ success, limit, remaining }"};</span>{"\n"}
+                      <span className="text-slate-300">{"}"}</span>
+                    </code>
+                  </pre>
+                </div>
+
+                {/* Context sources */}
+                <div className="mt-6 space-y-2">
+                  <p className="text-slate-500 text-xs uppercase tracking-wider mb-3">Why this approach:</p>
+                  <div className="flex items-start gap-3 p-3 rounded-xl bg-slate-800/30 hover:bg-slate-800/50 transition-colors">
+                    <span className="text-violet-400">📁</span>
+                    <span className="text-slate-300 text-xs md:text-sm">Matches your <code className="px-1.5 py-0.5 rounded bg-slate-700 text-violet-300">singleton pattern</code> used in auth.ts, db.ts</span>
                   </div>
-                  <div className="flex items-start gap-3 p-3 rounded-xl bg-muted/30 hover:bg-muted/50 transition-colors">
-                    <span>📄</span>
-                    <span className="text-foreground">src/payments/vat.ts: Line 45-67 — VAT calculation logic</span>
+                  <div className="flex items-start gap-3 p-3 rounded-xl bg-slate-800/30 hover:bg-slate-800/50 transition-colors">
+                    <span className="text-emerald-400">✓</span>
+                    <span className="text-slate-300 text-xs md:text-sm">Uses <code className="px-1.5 py-0.5 rounded bg-slate-700 text-violet-300">@upstash/redis</code> — already in your package.json</span>
+                  </div>
+                  <div className="flex items-start gap-3 p-3 rounded-xl bg-slate-800/30 hover:bg-slate-800/50 transition-colors">
+                    <span className="text-amber-400">📋</span>
+                    <span className="text-slate-300 text-xs md:text-sm">Follows your team's error handling from <code className="px-1.5 py-0.5 rounded bg-slate-700 text-violet-300">CONTRIBUTING.md</code></span>
                   </div>
                 </div>
-                <div className="mt-6 p-4 rounded-xl bg-primary/5 border border-primary/10">
-                  <p className="text-foreground leading-relaxed">
-                    <span className="text-primary font-semibold">Answer:</span> The EU payment failure is caused by an incorrect VAT calculation in <code className="px-2 py-0.5 rounded-md bg-muted text-primary font-mono text-xs">vat.ts</code>. 
-                    The fix was merged in PR #892 but not yet deployed to production.
+
+                {/* Ship it indicator */}
+                <div className="mt-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+                  <p className="text-slate-200 leading-relaxed text-sm">
+                    <span className="text-emerald-400 font-semibold">Ready to ship:</span> This code follows your existing patterns, uses your installed deps, and matches your team's style guide. Copy directly into your codebase.
                   </p>
                 </div>
               </div>
             </div>
           </div>
+
+          {/* Bottom caption */}
+          <p className="text-center text-muted-foreground text-sm mt-6">
+            Get production-ready code that matches your team's patterns and best practices
+          </p>
         </div>
       </div>
     </section>
