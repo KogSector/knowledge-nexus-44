@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Check } from "lucide-react";
 
 const steps = [
@@ -21,7 +22,75 @@ const steps = [
   }
 ];
 
+const codeExamples = [
+  {
+    id: "rate-limiter",
+    label: "Rate Limiter",
+    query: "How should I implement a rate limiter for our API?",
+    fileName: "src/middleware/rateLimiter.ts",
+    code: (
+      <>
+        <span className="text-violet-400">import</span><span className="text-slate-300">{" { Redis } "}</span><span className="text-violet-400">from</span><span className="text-amber-300"> &apos;@upstash/redis&apos;</span><span className="text-slate-300">;</span>{"\n"}
+        <span className="text-violet-400">import</span><span className="text-slate-300">{" { Ratelimit } "}</span><span className="text-violet-400">from</span><span className="text-amber-300"> &apos;@upstash/ratelimit&apos;</span><span className="text-slate-300">;</span>{"\n\n"}
+        <span className="text-slate-500">{"// Following your team's singleton pattern from auth.ts"}</span>{"\n"}
+        <span className="text-violet-400">const</span><span className="text-slate-300"> ratelimit = </span><span className="text-violet-400">new</span><span className="text-cyan-400"> Ratelimit</span><span className="text-slate-300">({"{"}</span>{"\n"}
+        <span className="text-slate-300">  redis: </span><span className="text-cyan-400">Redis</span><span className="text-slate-300">.fromEnv(),</span>{"\n"}
+        <span className="text-slate-300">  limiter: </span><span className="text-cyan-400">Ratelimit</span><span className="text-slate-300">.slidingWindow(</span><span className="text-amber-300">10</span><span className="text-slate-300">, </span><span className="text-amber-300">&quot;10 s&quot;</span><span className="text-slate-300">),</span>{"\n"}
+        <span className="text-slate-300">  analytics: </span><span className="text-amber-300">true</span><span className="text-slate-300">,</span>{"\n"}
+        <span className="text-slate-300">{"});"}</span>{"\n\n"}
+        <span className="text-violet-400">export async function</span><span className="text-cyan-400"> checkRateLimit</span><span className="text-slate-300">(userId: </span><span className="text-cyan-400">string</span><span className="text-slate-300">) {"{"}</span>{"\n"}
+        <span className="text-slate-300">{"  "}</span><span className="text-violet-400">const</span><span className="text-slate-300">{" { success, limit, remaining } = "}</span><span className="text-violet-400">await</span><span className="text-slate-300"> ratelimit.limit(userId);</span>{"\n"}
+        <span className="text-slate-300">{"  "}</span><span className="text-violet-400">return</span><span className="text-slate-300">{" { success, limit, remaining }"};</span>{"\n"}
+        <span className="text-slate-300">{"}"}</span>
+      </>
+    ),
+    reasons: [
+      { icon: "📁", text: "Matches your singleton pattern used in auth.ts, db.ts", highlight: "singleton pattern" },
+      { icon: "✓", text: "Uses @upstash/redis — already in your package.json", highlight: "@upstash/redis" },
+      { icon: "📋", text: "Follows your team's error handling from CONTRIBUTING.md", highlight: "CONTRIBUTING.md" },
+    ],
+  },
+  {
+    id: "payment-service",
+    label: "Payment Service",
+    query: "How do I process payments for EU customers with VAT?",
+    fileName: "src/services/payment.ts",
+    code: (
+      <>
+        <span className="text-violet-400">import</span><span className="text-slate-300">{" { Stripe } "}</span><span className="text-violet-400">from</span><span className="text-amber-300"> &apos;stripe&apos;</span><span className="text-slate-300">;</span>{"\n"}
+        <span className="text-violet-400">import</span><span className="text-slate-300">{" { calculateVAT } "}</span><span className="text-violet-400">from</span><span className="text-amber-300"> &apos;./vat&apos;</span><span className="text-slate-300">;</span>{"\n"}
+        <span className="text-violet-400">import</span><span className="text-slate-300">{" { logger } "}</span><span className="text-violet-400">from</span><span className="text-amber-300"> &apos;@/lib/logger&apos;</span><span className="text-slate-300">;</span>{"\n\n"}
+        <span className="text-slate-500">{"// Using your team's service class pattern from userService.ts"}</span>{"\n"}
+        <span className="text-violet-400">export class</span><span className="text-cyan-400"> PaymentService</span><span className="text-slate-300"> {"{"}</span>{"\n"}
+        <span className="text-slate-300">{"  "}</span><span className="text-violet-400">private</span><span className="text-slate-300"> stripe: </span><span className="text-cyan-400">Stripe</span><span className="text-slate-300">;</span>{"\n\n"}
+        <span className="text-slate-300">{"  "}</span><span className="text-violet-400">async</span><span className="text-cyan-400"> processPayment</span><span className="text-slate-300">({"{"}</span>{"\n"}
+        <span className="text-slate-300">{"    amount, currency, customerId, countryCode"}</span>{"\n"}
+        <span className="text-slate-300">{"  }: "}</span><span className="text-cyan-400">PaymentRequest</span><span className="text-slate-300">) {"{"}</span>{"\n"}
+        <span className="text-slate-300">{"    "}</span><span className="text-violet-400">const</span><span className="text-slate-300"> vatRate = </span><span className="text-cyan-400">calculateVAT</span><span className="text-slate-300">(countryCode);</span>{"\n"}
+        <span className="text-slate-300">{"    "}</span><span className="text-violet-400">const</span><span className="text-slate-300"> totalAmount = amount * (1 + vatRate);</span>{"\n\n"}
+        <span className="text-slate-300">{"    "}</span><span className="text-cyan-400">logger</span><span className="text-slate-300">.info(</span><span className="text-amber-300">&apos;Processing EU payment&apos;</span><span className="text-slate-300">, {"{ customerId, vatRate }"});</span>{"\n\n"}
+        <span className="text-slate-300">{"    "}</span><span className="text-violet-400">return</span><span className="text-slate-300"> this.stripe.paymentIntents.create({"{"}</span>{"\n"}
+        <span className="text-slate-300">{"      amount: "}</span><span className="text-cyan-400">Math</span><span className="text-slate-300">.round(totalAmount),</span>{"\n"}
+        <span className="text-slate-300">{"      currency,"}</span>{"\n"}
+        <span className="text-slate-300">{"      customer: customerId,"}</span>{"\n"}
+        <span className="text-slate-300">{"      metadata: { vat_rate: vatRate.toString() }"}</span>{"\n"}
+        <span className="text-slate-300">{"    });"}</span>{"\n"}
+        <span className="text-slate-300">{"  }"}</span>{"\n"}
+        <span className="text-slate-300">{"}"}</span>
+      </>
+    ),
+    reasons: [
+      { icon: "📁", text: "Uses your service class pattern from userService.ts", highlight: "service class pattern" },
+      { icon: "✓", text: "Imports your existing VAT calculator and logger", highlight: "calculateVAT" },
+      { icon: "💳", text: "Follows Stripe best practices from your payments docs", highlight: "Stripe best practices" },
+    ],
+  },
+];
+
 const HowItWorks = () => {
+  const [activeExample, setActiveExample] = useState("rate-limiter");
+  const currentExample = codeExamples.find(e => e.id === activeExample) || codeExamples[0];
+
   return (
     <section id="how-it-works" className="relative py-32 overflow-hidden">
       <div className="container relative z-10 px-4">
@@ -73,18 +142,32 @@ const HowItWorks = () => {
           ))}
         </div>
 
-        {/* Interactive code demo */}
+        {/* Interactive code demo with tabs */}
         <div className="max-w-5xl mx-auto">
           <div className="rounded-3xl bg-foreground/[0.03] border border-border overflow-hidden shadow-medium">
-            {/* Window header */}
-            <div className="flex items-center gap-3 px-5 py-4 bg-secondary/50 border-b border-border">
+            {/* Window header with tabs */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 px-5 py-4 bg-secondary/50 border-b border-border">
               <div className="flex gap-2">
                 <div className="w-3 h-3 rounded-full bg-destructive/60" />
                 <div className="w-3 h-3 rounded-full bg-amber-400/60" />
                 <div className="w-3 h-3 rounded-full bg-emerald-400/60" />
               </div>
-              <div className="flex-1 flex items-center justify-center">
-                <span className="text-xs text-muted-foreground font-mono px-3 py-1 rounded-full bg-muted/50">VS Code — knowledge-layer</span>
+              
+              {/* Tabs */}
+              <div className="flex-1 flex items-center justify-center gap-2">
+                {codeExamples.map((example) => (
+                  <button
+                    key={example.id}
+                    onClick={() => setActiveExample(example.id)}
+                    className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all duration-300 ${
+                      activeExample === example.id
+                        ? "bg-primary text-primary-foreground shadow-sm"
+                        : "bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground"
+                    }`}
+                  >
+                    {example.label}
+                  </button>
+                ))}
               </div>
             </div>
 
@@ -95,7 +178,7 @@ const HowItWorks = () => {
                 <span className="text-emerald-400 font-bold select-none">❯</span>
                 <div>
                   <span className="text-violet-400 font-semibold">@knowledge</span>
-                  <span className="text-slate-300 ml-2">How should I implement a rate limiter for our API?</span>
+                  <span className="text-slate-300 ml-2">{currentExample.query}</span>
                 </div>
               </div>
               
@@ -106,48 +189,38 @@ const HowItWorks = () => {
                 {/* Code example */}
                 <div className="rounded-xl bg-[#0d0d1a] border border-slate-700/50 overflow-hidden">
                   <div className="flex items-center justify-between px-4 py-2 bg-slate-800/50 border-b border-slate-700/50">
-                    <span className="text-xs text-slate-400">src/middleware/rateLimiter.ts</span>
+                    <span className="text-xs text-slate-400">{currentExample.fileName}</span>
                     <span className="text-xs text-emerald-400">Recommended pattern</span>
                   </div>
                   <pre className="p-4 text-xs md:text-sm overflow-x-auto">
-                    <code>
-                      <span className="text-violet-400">import</span><span className="text-slate-300"> {"{ Redis }"} </span><span className="text-violet-400">from</span><span className="text-amber-300"> '@upstash/redis'</span><span className="text-slate-300">;</span>{"\n"}
-                      <span className="text-violet-400">import</span><span className="text-slate-300"> {"{ Ratelimit }"} </span><span className="text-violet-400">from</span><span className="text-amber-300"> '@upstash/ratelimit'</span><span className="text-slate-300">;</span>{"\n\n"}
-                      <span className="text-slate-500">{"// Following your team's singleton pattern from auth.ts"}</span>{"\n"}
-                      <span className="text-violet-400">const</span><span className="text-slate-300"> ratelimit = </span><span className="text-violet-400">new</span><span className="text-cyan-400"> Ratelimit</span><span className="text-slate-300">({"{"}</span>{"\n"}
-                      <span className="text-slate-300">  redis: </span><span className="text-cyan-400">Redis</span><span className="text-slate-300">.fromEnv(),</span>{"\n"}
-                      <span className="text-slate-300">  limiter: </span><span className="text-cyan-400">Ratelimit</span><span className="text-slate-300">.slidingWindow(</span><span className="text-amber-300">10</span><span className="text-slate-300">, </span><span className="text-amber-300">"10 s"</span><span className="text-slate-300">),</span>{"\n"}
-                      <span className="text-slate-300">  analytics: </span><span className="text-amber-300">true</span><span className="text-slate-300">,</span>{"\n"}
-                      <span className="text-slate-300">{"})"}</span><span className="text-slate-300">;</span>{"\n\n"}
-                      <span className="text-violet-400">export async function</span><span className="text-cyan-400"> checkRateLimit</span><span className="text-slate-300">(userId: </span><span className="text-cyan-400">string</span><span className="text-slate-300">) {"{"}</span>{"\n"}
-                      <span className="text-slate-300">  </span><span className="text-violet-400">const</span><span className="text-slate-300"> {"{ success, limit, remaining }"} = </span><span className="text-violet-400">await</span><span className="text-slate-300"> ratelimit.limit(userId);</span>{"\n"}
-                      <span className="text-slate-300">  </span><span className="text-violet-400">return</span><span className="text-slate-300"> {"{ success, limit, remaining }"};</span>{"\n"}
-                      <span className="text-slate-300">{"}"}</span>
-                    </code>
+                    <code>{currentExample.code}</code>
                   </pre>
                 </div>
 
                 {/* Context sources */}
                 <div className="mt-6 space-y-2">
                   <p className="text-slate-500 text-xs uppercase tracking-wider mb-3">Why this approach:</p>
-                  <div className="flex items-start gap-3 p-3 rounded-xl bg-slate-800/30 hover:bg-slate-800/50 transition-colors">
-                    <span className="text-violet-400">📁</span>
-                    <span className="text-slate-300 text-xs md:text-sm">Matches your <code className="px-1.5 py-0.5 rounded bg-slate-700 text-violet-300">singleton pattern</code> used in auth.ts, db.ts</span>
-                  </div>
-                  <div className="flex items-start gap-3 p-3 rounded-xl bg-slate-800/30 hover:bg-slate-800/50 transition-colors">
-                    <span className="text-emerald-400">✓</span>
-                    <span className="text-slate-300 text-xs md:text-sm">Uses <code className="px-1.5 py-0.5 rounded bg-slate-700 text-violet-300">@upstash/redis</code> — already in your package.json</span>
-                  </div>
-                  <div className="flex items-start gap-3 p-3 rounded-xl bg-slate-800/30 hover:bg-slate-800/50 transition-colors">
-                    <span className="text-amber-400">📋</span>
-                    <span className="text-slate-300 text-xs md:text-sm">Follows your team's error handling from <code className="px-1.5 py-0.5 rounded bg-slate-700 text-violet-300">CONTRIBUTING.md</code></span>
-                  </div>
+                  {currentExample.reasons.map((reason, idx) => (
+                    <div key={idx} className="flex items-start gap-3 p-3 rounded-xl bg-slate-800/30 hover:bg-slate-800/50 transition-colors">
+                      <span className={reason.icon === "✓" ? "text-emerald-400" : reason.icon === "💳" ? "text-amber-400" : "text-violet-400"}>{reason.icon}</span>
+                      <span className="text-slate-300 text-xs md:text-sm">
+                        {reason.text.split(reason.highlight).map((part, i, arr) => (
+                          <span key={i}>
+                            {part}
+                            {i < arr.length - 1 && (
+                              <code className="px-1.5 py-0.5 rounded bg-slate-700 text-violet-300">{reason.highlight}</code>
+                            )}
+                          </span>
+                        ))}
+                      </span>
+                    </div>
+                  ))}
                 </div>
 
                 {/* Ship it indicator */}
                 <div className="mt-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
                   <p className="text-slate-200 leading-relaxed text-sm">
-                    <span className="text-emerald-400 font-semibold">Ready to ship:</span> This code follows your existing patterns, uses your installed deps, and matches your team's style guide. Copy directly into your codebase.
+                    <span className="text-emerald-400 font-semibold">Ready to ship:</span> This code follows your existing patterns, uses your installed deps, and matches your team&apos;s style guide. Copy directly into your codebase.
                   </p>
                 </div>
               </div>
@@ -156,7 +229,7 @@ const HowItWorks = () => {
 
           {/* Bottom caption */}
           <p className="text-center text-muted-foreground text-sm mt-6">
-            Get production-ready code that matches your team's patterns and best practices
+            Get production-ready code that matches your team&apos;s patterns and best practices
           </p>
         </div>
       </div>
