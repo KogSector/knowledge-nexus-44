@@ -81,12 +81,6 @@ const Integrations = () => {
               <div className="flex-shrink-0 w-20 h-20 rounded-3xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-primary">
                 <span className="text-2xl font-bold text-primary-foreground">MCP</span>
               </div>
-              <div className="text-center md:text-left">
-                <h3 className="text-2xl font-bold text-foreground mb-2">Model Context Protocol Native</h3>
-                <p className="text-muted-foreground text-lg">
-                  Connect any MCP-compatible AI IDE instantly. Cursor, Windsurf, Copilot, and more.
-                </p>
-              </div>
             </div>
           </div>
         </div>
