@@ -70,46 +70,6 @@ const Integrations = () => {
           ))}
         </div>
 
-        {/* MCP highlight */}
-        <div className="mt-20 relative">
-          {/* Connection visualization */}
-          <div className="relative flex flex-col items-center">
-            {/* Animated connection lines */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="w-64 h-64 rounded-full border border-primary/10 animate-[pulse_4s_ease-in-out_infinite]" />
-              <div className="absolute w-48 h-48 rounded-full border border-primary/20 animate-[pulse_3s_ease-in-out_infinite_0.5s]" />
-              <div className="absolute w-32 h-32 rounded-full border border-primary/30 animate-[pulse_2s_ease-in-out_infinite_1s]" />
-            </div>
-            
-            {/* Central MCP badge */}
-            <div className="relative z-10 flex flex-col items-center gap-6 py-12">
-              <div className="px-6 py-3 rounded-2xl bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 border border-primary/20 backdrop-blur-sm">
-                <span className="text-lg font-semibold text-primary">MCP Protocol</span>
-              </div>
-              
-              <p className="text-center text-muted-foreground max-w-lg">
-                Powered by the <span className="text-foreground font-medium">Model Context Protocol</span> — 
-                a unified standard that enables AI to seamlessly access and understand your entire development ecosystem.
-              </p>
-              
-              {/* Feature highlights */}
-              <div className="flex flex-wrap justify-center gap-4 mt-4">
-                <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-card border border-border/50">
-                  <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                  <span className="text-sm text-muted-foreground">Real-time sync</span>
-                </div>
-                <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-card border border-border/50">
-                  <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
-                  <span className="text-sm text-muted-foreground">Universal context</span>
-                </div>
-                <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-card border border-border/50">
-                  <div className="w-2 h-2 rounded-full bg-purple-500 animate-pulse" />
-                  <span className="text-sm text-muted-foreground">Zero configuration</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );
