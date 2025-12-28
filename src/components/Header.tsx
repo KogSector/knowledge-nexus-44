@@ -33,16 +33,16 @@ const Header = () => {
             Features
           </a>
           <a
-            href="#integrations"
-            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-          >
-            Integrations
-          </a>
-          <a
             href="#how-it-works"
             className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
           >
             How it Works
+          </a>
+          <a
+            href="#integrations"
+            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Integrations
           </a>
         </nav>
 
@@ -73,18 +73,18 @@ const Header = () => {
               Features
             </a>
             <a
-              href="#integrations"
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-2"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Integrations
-            </a>
-            <a
               href="#how-it-works"
               className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-2"
               onClick={() => setMobileMenuOpen(false)}
             >
               How it Works
+            </a>
+            <a
+              href="#integrations"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-2"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Integrations
             </a>
             <Button variant="default" size="default" onClick={scrollToEmail} className="mt-2">
               Get Early Access
