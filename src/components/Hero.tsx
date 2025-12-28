@@ -71,7 +71,7 @@ const Hero = () => {
 
           {/* Subheadline */}
           <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-12 animate-slide-up stagger-2 text-balance leading-relaxed">
-            Connect your entire dev ecosystem using GitHub, Slack, Jira, docs, etc and let AI understand the full
+            Connect your entire dev ecosystem using GitHub, Slack, Jira, docs, etc., and let AI understand the full
             context. Query from any IDE with zero vendor lock-in.
           </p>
 
