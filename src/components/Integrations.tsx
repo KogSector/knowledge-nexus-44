@@ -60,7 +60,9 @@ const Integrations = () => {
                       <span className="w-5 h-5 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                         {IntegrationIcons[integration.name]}
                       </span>
-                      <span className="font-medium text-foreground">{integration.name}</span>
+                      {integration.name !== "..." && (
+                        <span className="font-medium text-foreground">{integration.name}</span>
+                      )}
                     </div>
                   ))}
               </div>
