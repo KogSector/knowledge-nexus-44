@@ -87,24 +87,11 @@ const CTA = () => {
               </form>
 
               <div className="mt-10 flex flex-wrap items-center justify-center gap-6 text-sm">
-                <span className="flex items-center gap-2 text-muted-foreground">
-                  <div className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center">
-                    <Check className="w-3 h-3 text-emerald-600" />
-                  </div>
-                  No credit card required
-                </span>
-                <span className="flex items-center gap-2 text-muted-foreground">
-                  <div className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center">
-                    <Check className="w-3 h-3 text-emerald-600" />
-                  </div>
-                  Cancel anytime
-                </span>
-                <span className="flex items-center gap-2 text-muted-foreground">
-                  <div className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center">
-                    <Check className="w-3 h-3 text-emerald-600" />
-                  </div>
-                  SOC 2 compliant
-                </span>
+                <span className="text-muted-foreground">No credit card required</span>
+                <span className="text-muted-foreground">•</span>
+                <span className="text-muted-foreground">Cancel anytime</span>
+                <span className="text-muted-foreground">•</span>
+                <span className="text-muted-foreground">SOC 2 compliant</span>
               </div>
             </div>
           </div>
