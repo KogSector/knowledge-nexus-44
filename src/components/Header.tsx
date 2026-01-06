@@ -21,7 +21,7 @@ const Header = () => {
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-primary">
             <Layers className="w-5 h-5 text-primary-foreground" />
           </div>
-          <span className="text-xl font-semibold text-foreground">KnowledgeLayer</span>
+          <span className="text-xl font-semibold text-foreground">ConFuse</span>
         </button>
 
         {/* Desktop nav */}
