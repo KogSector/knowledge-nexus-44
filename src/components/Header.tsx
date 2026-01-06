@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Layers, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import confuseLogo from "@/assets/confuse-logo.jpeg";
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -18,9 +19,7 @@ const Header = () => {
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/60 backdrop-blur-xl border-b border-border/30">
       <div className="container flex items-center justify-between h-18 px-4 py-4">
         <button onClick={scrollToTop} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-primary">
-            <Layers className="w-5 h-5 text-primary-foreground" />
-          </div>
+          <img src={confuseLogo} alt="ConFuse logo" className="w-10 h-10 rounded-xl object-cover" />
           <span className="text-xl font-semibold text-foreground">ConFuse</span>
         </button>
 
