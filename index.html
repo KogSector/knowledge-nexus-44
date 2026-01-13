@@ -3,24 +3,70 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- TODO: Set the document title to the name of your application -->
     <title>ConFuse - Waitlist</title>
     <meta name="description" content="Connect GitHub, Slack, Jira, and more. Let AI understand your entire software development lifecycle." />
     <meta name="author" content="ConFuse" />
-    <link rel="icon" href="/favicon.png" type="image/png" />
 
-    <meta property="og:title" content="ConFuse" />
-    <meta property="og:description" content="Lovable Generated Project" />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <!-- Theme-aware favicons -->
+    <link rel="icon" href="/favicon_light.png" media="(prefers-color-scheme: light)" type="image/png" />
+    <link rel="icon" href="/favicon_dark.png"  media="(prefers-color-scheme: dark)"  type="image/png" />
+    <!-- Fallback for user agents that ignore media on link -->
+    <link rel="icon" href="/favicon_light.png" type="image/png" />
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@Lovable" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <!-- theme-color for mobile UI (also theme-aware) -->
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)"  content="#000000" />
+
+    <!-- OpenGraph / Twitter meta omitted for brevity... -->
   </head>
 
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+
+    <!-- JS fallback to actively set favicon and handle theme changes -->
+    <script>
+      (function () {
+        // convenience: set the favicon link href in the document head
+        function setFavicon(href) {
+          // Try to find an existing icon link with rel containing "icon"
+          let link = document.querySelector('link[rel~="icon"]');
+          if (!link) {
+            link = document.createElement('link');
+            link.rel = 'icon';
+            document.head.appendChild(link);
+          }
+          link.href = href;
+        }
+
+        // Detect prefers-color-scheme and update accordingly
+        const darkMQ = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+        const lightMQ = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)');
+
+        function update() {
+          const isDark = darkMQ ? darkMQ.matches : window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          setFavicon(isDark ? '/favicon-dark.png' : '/favicon-light.png');
+        }
+
+        // initial set
+        update();
+
+        // Listen for changes (addEventListener preferred; fallback to addListener)
+        if (darkMQ) {
+          if (typeof darkMQ.addEventListener === 'function') {
+            darkMQ.addEventListener('change', update);
+          } else if (typeof darkMQ.addListener === 'function') {
+            darkMQ.addListener(update);
+          }
+        }
+        if (lightMQ) {
+          if (typeof lightMQ.addEventListener === 'function') {
+            lightMQ.addEventListener('change', update);
+          } else if (typeof lightMQ.addListener === 'function') {
+            lightMQ.addListener(update);
+          }
+        }
+      })();
+    </script>
   </body>
 </html>
