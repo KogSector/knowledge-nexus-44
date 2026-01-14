@@ -7,45 +7,37 @@
     <meta name="description" content="Connect GitHub, Slack, Jira, and more. Let AI understand your entire software development lifecycle." />
     <meta name="author" content="ConFuse" />
 
-    <link id="favicon" rel="icon" href="/favicon_light.png" type="image/png" />
+    <link id="favicon" rel="icon" href="/favicon_dark.png" type="image/png" />
 
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)"  content="#000000" />
-
-    <meta property="og:title" content="ConFuse - Waitlist" />
-    <meta property="og:description" content="AI-driven lifecycle integration." />
-    <meta property="og:image" content="/og-image.png" />
-    <meta name="twitter:card" content="summary_large_image" />
   </head>
 
   <body>
     <div id="root"></div>
-    
     <script type="module" src="/src/main.tsx"></script>
 
     <script>
       (function () {
         const favicon = document.getElementById('favicon');
-        // Match media query for dark mode
         const darkMQ = window.matchMedia('(prefers-color-scheme: dark)');
 
         function update() {
-          // Explicitly using underscores as requested
+          // LOGIC REVERSED:
+          // If the system is DARK, show the LIGHT logo
+          // If the system is LIGHT, show the DARK logo
           if (darkMQ.matches) {
-            favicon.href = '/favicon_dark.png';
-          } else {
             favicon.href = '/favicon_light.png';
+          } else {
+            favicon.href = '/favicon_dark.png';
           }
         }
 
-        // Run immediately to set the correct icon on page load
         update();
 
-        // Listen for system/browser theme changes
         try {
           darkMQ.addEventListener('change', update);
         } catch (e) {
-          // Fallback for older Safari/Chrome versions
           darkMQ.addListener(update);
         }
       })();
