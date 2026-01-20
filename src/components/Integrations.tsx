@@ -11,7 +11,7 @@ const integrations = [
   { name: "Linear", category: "Issues" },
   { name: "Notion", category: "Docs" },
 
-  { name: "Google Docs", category: "Docs" },
+  { name: "Google Drive", category: "Docs" },
   { name: "Dropbox", category: "Docs" },
 
   { name: "Local", category: "Docs" },
